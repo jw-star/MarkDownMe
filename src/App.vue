@@ -251,10 +251,15 @@ lastmod: '2021-04-05 13:07:38'
     },
     //提交文章
     submitPost() {
+            if(this.content.indexOf('---',4)==-1){
+           this.$message.error("请设置元数据重新提交");
+           return
+      }
       this.loading = true;
       this.loadingText = "正在提交";
       var data;
       var path;
+
       if (this.value == "") {
         data = {
           message: "新建文章",
