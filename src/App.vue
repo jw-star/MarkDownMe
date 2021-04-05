@@ -2,13 +2,17 @@
   <div id="app">
     <el-container>
       <el-header>
-
-       <!-- 参数 -->
-          <el-tooltip class="item" effect="dark" content="配置github参数" placement="bottom">
-        <el-button @click="openParameter" type="primary" style="margin-left: 16px">
-          github参数
-        </el-button>
-          </el-tooltip>
+        <!-- 参数 -->
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="配置github参数"
+          placement="bottom"
+        >
+          <el-button @click="openParameter" type="primary" style="margin-left: 16px">
+            github参数
+          </el-button>
+        </el-tooltip>
 
         <!-- 列表 -->
         <el-select
@@ -32,22 +36,44 @@
           </el-option>
         </el-select>
         <!-- 元数据 -->
-          <el-tooltip class="item" effect="dark" content="文章内容一定要 --- 开头" placement="bottom">
+
         <el-button @click="open" type="primary" style="margin-left: 16px">
           设置元数据
         </el-button>
-          </el-tooltip>
+
         <!--  -->
-        <el-button @click="submitPost" type="primary">提交</el-button>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="提交或者新增文章"
+          placement="bottom"
+        >
+          <el-button @click="submitPost" type="primary">提交</el-button>
+        </el-tooltip>
+
+        <!--  -->
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="删除选中的文章"
+          placement="bottom"
+        >
+          <el-button @click="deleteSel" type="primary">删除文章</el-button>
+        </el-tooltip>
       </el-header>
       <!-- 内容 -->
-      <el-main><mavon-editor  v-loading="loading"  :element-loading-text="loadingText"  v-model="content" /></el-main>
+      <el-main
+        ><mavon-editor
+          v-loading="loading"
+          :element-loading-text="loadingText"
+          v-model="content"
+      /></el-main>
 
       <el-footer>Footer</el-footer>
 
       <el-drawer title="元数据" :visible.sync="drawer" @close="updateMeta">
         <div class="demo-drawer__content">
-          <el-form label-position="left" >
+          <el-form label-position="left">
             <el-form-item label="作者">
               <el-input v-model="meta.authors" autocomplete="off"></el-input>
             </el-form-item>
@@ -68,7 +94,6 @@
               </el-select>
             </el-form-item>
             <el-form-item label="创建日期">
-            
               <div class="block">
                 <el-date-picker
                   v-model="meta.date"
@@ -81,13 +106,11 @@
             </el-form-item>
 
             <el-form-item label="修改日期">
-             
               <div class="block">
                 <el-date-picker
                   v-model="meta.lastmod"
                   type="datetime"
                   placeholder="选择日期时间"
-                  
                   value-format="yyyy-MM-dd HH:mm:ss"
                 >
                 </el-date-picker>
@@ -97,12 +120,15 @@
         </div>
       </el-drawer>
 
-       <el-drawer title="github参数" :visible.sync="drawer_git" @close="updateGitParam">
+      <el-drawer title="github参数" :visible.sync="drawer_git" @close="updateGitParam">
         <div class="demo-drawer__content">
-          <el-form label-position="left" >
-             <el-form-item label="token"> <el-link type="primary" href="https://github.com/settings/tokens" >点击链接获取token</el-link>
+          <el-form label-position="left">
+            <el-form-item label="token">
+              <el-link type="primary" href="https://github.com/settings/tokens"
+                >点击链接获取token</el-link
+              >
               <el-input v-model="git_token" autocomplete="off"></el-input>
-            </el-form-item>           
+            </el-form-item>
             <el-form-item label="用户名">
               <el-input v-model="git_username" autocomplete="off"></el-input>
             </el-form-item>
@@ -112,8 +138,6 @@
             <el-form-item label="文章相对路径">
               <el-input v-model="git_path" autocomplete="off"></el-input>
             </el-form-item>
-
-
           </el-form>
         </div>
       </el-drawer>
@@ -122,7 +146,7 @@
 </template>
 
 <script>
-import { getPosts, getContent, updatePost } from "@/api/index.js";
+import { getPosts, getContent, updatePost, delPost } from "@/api/index.js";
 const jsyaml = require("js-yaml");
 export default {
   name: "app",
@@ -155,11 +179,11 @@ lastmod: '2021-04-05 13:07:38'
       drawer_git: false,
       nowtime: new Date(),
       loading: false,
-      loadingText: '加载中',
+      loadingText: "加载中",
       git_token: localStorage.getItem("git_token"),
       git_username: localStorage.getItem("git_username"),
-      git_repo:localStorage.getItem("git_repo"),
-      git_path:localStorage.getItem("git_path"),
+      git_repo: localStorage.getItem("git_repo"),
+      git_path: localStorage.getItem("git_path"),
     };
   },
   methods: {
@@ -183,14 +207,14 @@ lastmod: '2021-04-05 13:07:38'
     //清空内容
     clearContent() {
       this.content = "";
-      this.clearMeta()
-      this.loading=false
+      this.clearMeta();
+      this.loading = false;
     },
-    updateGitParam(){
-      localStorage.setItem("git_token",this.git_token)
-      localStorage.setItem("git_username",this.git_username)
-      localStorage.setItem("git_repo",this.git_repo)
-      localStorage.setItem("git_path",this.git_path)
+    updateGitParam() {
+      localStorage.setItem("git_token", this.git_token);
+      localStorage.setItem("git_username", this.git_username);
+      localStorage.setItem("git_repo", this.git_repo);
+      localStorage.setItem("git_path", this.git_path);
     },
     //修改元数据
     updateMeta() {
@@ -200,38 +224,55 @@ lastmod: '2021-04-05 13:07:38'
       let temp = this.content;
       var i = temp.indexOf("---", 3);
       let str = temp.substring(0, i);
-      if(i!=-1){
-
-       this.content = `---\n${temp.replace(str, newMeta)}`;
-      }else{
+      if (i != -1) {
+        this.content = `---\n${temp.replace(str, newMeta)}`;
+      } else {
         this.content = `---\n${temp.replace(str, newMeta)}\n---\n`;
       }
+    },
+    deleteSel() {
+       this.loading = true;
+      this.loadingText = "正在删除";
+     
+      var data = {
+        message: "删除文章",
+        sha: this.blogList[this.value].sha,
+      };
+      delPost(this.blogList[this.value].path, data).then((res) => {
+        this.getPostList();
+        this.clearContent()
+        this.loading = false;
 
+        this.$message({
+          message: "删除成功",
+          type: "success",
+        });
+      });
     },
     //提交文章
     submitPost() {
-       this.loading=true
-      this.loadingText="正在提交"
-      var data
-      var path 
-       if(this.value==''){
-         data = {
+      this.loading = true;
+      this.loadingText = "正在提交";
+      var data;
+      var path;
+      if (this.value == "") {
+        data = {
           message: "新建文章",
           content: this.encode(this.content),
-        };        
-        path=  this.git_path+"/"+this.meta.date + "-"+ this.meta.title+'.md'
-       }else{
-          data = {
-                  message: "提交修改",
-                  content: this.encode(this.content),
-                  sha:  this.blogList[this.value].sha,
-                };
-          path= this.blogList[this.value].path                
-       }
+        };
+        path = this.git_path + "/" + this.meta.date + "-" + this.meta.title + ".md";
+      } else {
+        data = {
+          message: "提交修改",
+          content: this.encode(this.content),
+          sha: this.blogList[this.value].sha,
+        };
+        path = this.blogList[this.value].path;
+      }
       updatePost(path, data)
         .then((res) => {
-           this.getPostList()
-          this.loading=false
+          this.getPostList();
+          this.loading = false;
           this.$message({
             message: "提交成功",
             type: "success",
@@ -243,10 +284,10 @@ lastmod: '2021-04-05 13:07:38'
     },
     //刷新内容
     pushContent() {
-      this.loading=true
+      this.loading = true;
       getContent(this.blogList[this.value].url).then((res) => {
         this.content = this.decode(res.content);
-        this.loading=false
+        this.loading = false;
       });
       this.clearMeta();
     },
@@ -363,27 +404,30 @@ lastmod: '2021-04-05 13:07:38'
       this.meta = this.getMetaJson();
       this.drawer = true;
     },
-    openParameter(){
-        this.drawer_git=true
+    openParameter() {
+      this.drawer_git = true;
     },
-    getPostList(){
-        getPosts().then((res) => {
-          this.blogList = res;
-        });
-    }
+    getPostList() {
+      getPosts().then((res) => {
+        this.blogList = res;
+      });
+    },
   },
   created() {
-    if(this.git_token!=null&&this.git_username!=null&&this.git_repo!=null&&this.git_path!=null){
-       this.getPostList()
-    }else{
-        this.$message({
-          message: '请先点击github参数设置，设置token,用户名等信息',
-          type: 'warning'
-        });
+    if (
+      this.git_token != null &&
+      this.git_username != null &&
+      this.git_repo != null &&
+      this.git_path != null
+    ) {
+      this.getPostList();
+    } else {
+      this.$message({
+        message: "请先点击github参数设置，设置token,用户名等信息",
+        type: "warning",
+      });
     }
-    
   },
- 
 };
 </script>
 
