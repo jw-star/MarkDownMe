@@ -2,6 +2,9 @@
   <div id="app">
     <el-container>
       <el-header>
+        <el-row :gutter="2" type="flex">
+
+          <el-col :xs="{span:1,offset:0}" :sm="{span:4}" :md="{span:3}">
         <!-- 参数 -->
         <el-tooltip
           class="item"
@@ -9,11 +12,21 @@
           content="配置github参数"
           placement="bottom"
         >
-          <el-button @click="openParameter" type="primary" style="margin-left: 16px">
+          <el-button @click="openParameter" type="primary" >
             github参数
           </el-button>
         </el-tooltip>
 
+         </el-col>
+         <el-col :xs="{span:2}" :sm="{span:4}" :md="{span:3}">
+        <!-- 元数据 -->
+
+        <el-button @click="open" type="primary" >
+          设置元数据
+        </el-button>
+
+         </el-col>         
+         <el-col :xs="{span:4}" :sm="{span:4}" :md="{span:4}">
         <!-- 列表 -->
         <el-select
           v-model="value"
@@ -35,11 +48,10 @@
             }}</span>
           </el-option>
         </el-select>
-        <!-- 元数据 -->
 
-        <el-button @click="open" type="primary" style="margin-left: 16px">
-          设置元数据
-        </el-button>
+         </el-col>
+
+         <el-col :xs="{span:4,offset:0}" :sm="{span:4}" :md="{span:2}">
 
         <!--  -->
         <el-tooltip
@@ -50,7 +62,8 @@
         >
           <el-button @click="submitPost" type="primary">提交</el-button>
         </el-tooltip>
-
+         </el-col>
+         <el-col :xs="{span:4,offset:0}" :sm="{span:4}" :md="{span:2}">
         <!--  -->
         <el-tooltip
           class="item"
@@ -60,6 +73,18 @@
         >
           <el-button @click="deleteSel" type="primary">删除文章</el-button>
         </el-tooltip>
+
+         </el-col>
+
+        </el-row>
+
+
+
+
+
+
+
+
         <a href="https://github.com/jw-star/MarkDownMe"
           ><img
             style="
@@ -261,7 +286,10 @@ lastmod: '2021-04-05 13:07:38'
           message: "删除成功",
           type: "success",
         });
-      });
+      })   .catch((err) => {
+          this.$message.error("删除失败,请查看参数设置");
+          this.loading = false;
+        });
     },
     //提交文章
     submitPost() {
@@ -429,7 +457,7 @@ lastmod: '2021-04-05 13:07:38'
     },
     getPostList() {
       getPosts().then((res) => {
-        this.blogList = res;
+        this.blogList = res.reverse();
       });
     },
   },
