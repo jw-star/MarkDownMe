@@ -8,7 +8,11 @@
 
 3. 可以创建新的markdown文件,无需填写文件名
 
+## 预览
 
+![image.png](https://i.loli.net/2021/04/05/8aIOgEkrFAKGLcw.png)
+
+![image.png](https://i.loli.net/2021/04/05/OospHq5yV1BJjGA.png)
 
 
 ## Project setup

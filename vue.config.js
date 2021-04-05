@@ -1,6 +1,11 @@
 module.exports={
 
     lintOnSave:false,
+    
+  css: {
+    extract: false
+  }
+,
     devServer: {
         // port: '8088', //指定前端访问的端口号
         proxy: {

@@ -299,6 +299,7 @@ lastmod: '2021-04-05 13:07:38'
         })
         .catch((err) => {
           this.$message.error("失败，请保存草稿，重新提交");
+          this.loading = false;
         });
     },
     //刷新内容
