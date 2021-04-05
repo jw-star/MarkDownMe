@@ -10,11 +10,20 @@
 
 ## 预览
 
+**demo:https://markdown.gojw.xyz/**
+
+
 ![image.png](https://i.loli.net/2021/04/05/8aIOgEkrFAKGLcw.png)
+
+设置参数
+
+![image.png](https://i.loli.net/2021/04/05/jdh2oTcGMWtzu6q.png)
+
+元数据
 
 ![image.png](https://i.loli.net/2021/04/05/OospHq5yV1BJjGA.png)
 
-demo:https://markdown.gojw.xyz/
+
 
 ## Project setup
 ```
