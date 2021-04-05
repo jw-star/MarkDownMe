@@ -3,87 +3,69 @@
     <el-container>
       <el-header>
         <el-row :gutter="2" type="flex">
+          <el-col :xs="{ span: 1, offset: 0 }" :sm="{ span: 4 }" :md="{ span: 3 }">
+            <!-- 参数 -->
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="配置github参数"
+              placement="bottom"
+            >
+              <el-button @click="openParameter" type="primary"> github参数 </el-button>
+            </el-tooltip>
+          </el-col>
+          <el-col :xs="{ span: 2 }" :sm="{ span: 4 }" :md="{ span: 3 }">
+            <!-- 元数据 -->
 
-          <el-col :xs="{span:1,offset:0}" :sm="{span:4}" :md="{span:3}">
-        <!-- 参数 -->
-        <el-tooltip
-          class="item"
-          effect="dark"
-          content="配置github参数"
-          placement="bottom"
-        >
-          <el-button @click="openParameter" type="primary" >
-            github参数
-          </el-button>
-        </el-tooltip>
+            <el-button @click="open" type="primary"> 设置元数据 </el-button>
+          </el-col>
+          <el-col :xs="{ span: 4 }" :sm="{ span: 4 }" :md="{ span: 4 }">
+            <!-- 列表 -->
+            <el-select
+              v-model="value"
+              filterable
+              @change="pushContent"
+              placeholder="请选择要编辑的文件  字数"
+              clearable
+              @clear="clearContent"
+            >
+              <el-option
+                v-for="(item, index) in blogList"
+                :key="item.name"
+                :label="item.name"
+                :value="index"
+              >
+                <span style="float: left">{{ item.name }}</span>
+                <span style="float: right; color: #8492a6; font-size: 13px">{{
+                  item.size
+                }}</span>
+              </el-option>
+            </el-select>
+          </el-col>
 
-         </el-col>
-         <el-col :xs="{span:2}" :sm="{span:4}" :md="{span:3}">
-        <!-- 元数据 -->
-
-        <el-button @click="open" type="primary" >
-          设置元数据
-        </el-button>
-
-         </el-col>         
-         <el-col :xs="{span:4}" :sm="{span:4}" :md="{span:4}">
-        <!-- 列表 -->
-        <el-select
-          v-model="value"
-          filterable
-          @change="pushContent"
-          placeholder="请选择要编辑的文件  字数"
-          clearable
-          @clear="clearContent"
-        >
-          <el-option
-            v-for="(item, index) in blogList"
-            :key="item.name"
-            :label="item.name"
-            :value="index"
-          >
-            <span style="float: left">{{ item.name }}</span>
-            <span style="float: right; color: #8492a6; font-size: 13px">{{
-              item.size
-            }}</span>
-          </el-option>
-        </el-select>
-
-         </el-col>
-
-         <el-col :xs="{span:4,offset:0}" :sm="{span:4}" :md="{span:2}">
-
-        <!--  -->
-        <el-tooltip
-          class="item"
-          effect="dark"
-          content="提交或者新增文章"
-          placement="bottom"
-        >
-          <el-button @click="submitPost" type="primary">提交</el-button>
-        </el-tooltip>
-         </el-col>
-         <el-col :xs="{span:4,offset:0}" :sm="{span:4}" :md="{span:2}">
-        <!--  -->
-        <el-tooltip
-          class="item"
-          effect="dark"
-          content="删除选中的文章"
-          placement="bottom"
-        >
-          <el-button @click="deleteSel" type="primary">删除文章</el-button>
-        </el-tooltip>
-
-         </el-col>
-
+          <el-col :xs="{ span: 4, offset: 0 }" :sm="{ span: 4 }" :md="{ span: 2 }">
+            <!--  -->
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="提交或者新增文章"
+              placement="bottom"
+            >
+              <el-button @click="submitPost" type="primary">提交</el-button>
+            </el-tooltip>
+          </el-col>
+          <el-col :xs="{ span: 4, offset: 0 }" :sm="{ span: 4 }" :md="{ span: 2 }">
+            <!--  -->
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="删除选中的文章"
+              placement="bottom"
+            >
+              <el-button @click="deleteSel" type="primary">删除文章</el-button>
+            </el-tooltip>
+          </el-col>
         </el-row>
-
-
-
-
-
-
-
 
         <a href="https://github.com/jw-star/MarkDownMe"
           ><img
@@ -98,7 +80,6 @@
             src="https://aral.github.com/fork-me-on-github-retina-ribbons/right-graphite@2x.png"
             alt="Fork me on GitHub"
         /></a>
-        
       </el-header>
       <!-- 内容 -->
       <el-main
@@ -110,7 +91,12 @@
 
       <el-footer></el-footer>
 
-      <el-drawer title="元数据" :visible.sync="drawer" @close="updateMeta">
+      <el-drawer
+        :before-close="handleClose"
+        title="元数据"
+        :visible.sync="drawer"
+        @close="updateMeta"
+      >
         <div class="demo-drawer__content">
           <el-form label-position="left">
             <el-form-item label="作者">
@@ -159,7 +145,12 @@
         </div>
       </el-drawer>
 
-      <el-drawer title="github参数" :visible.sync="drawer_git" @close="updateGitParam">
+      <el-drawer
+        :before-close="handleClose"
+        title="github参数"
+        :visible.sync="drawer_git"
+        @close="updateGitParam"
+      >
         <div class="demo-drawer__content">
           <el-form label-position="left">
             <el-form-item label="token">
@@ -236,6 +227,13 @@ lastmod: '2021-04-05 13:07:38'
         return jsyaml.dump(json);
       }
     },
+    handleClose(done) {
+      this.$confirm("确认关闭？")
+        .then((_) => {
+          done();
+        })
+        .catch((_) => {});
+    },
     clearMeta() {
       this.meta.authors = "";
       this.meta.title = "";
@@ -277,16 +275,18 @@ lastmod: '2021-04-05 13:07:38'
         message: "删除文章",
         sha: this.blogList[this.value].sha,
       };
-      delPost(this.blogList[this.value].path, data).then((res) => {
-        this.getPostList();
-        this.clearContent();
-        this.loading = false;
+      delPost(this.blogList[this.value].path, data)
+        .then((res) => {
+          this.getPostList();
+          this.clearContent();
+          this.loading = false;
 
-        this.$message({
-          message: "删除成功",
-          type: "success",
-        });
-      })   .catch((err) => {
+          this.$message({
+            message: "删除成功",
+            type: "success",
+          });
+        })
+        .catch((err) => {
           this.$message.error("删除失败,请查看参数设置");
           this.loading = false;
         });
