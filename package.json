@@ -14,8 +14,7 @@
     "js-yaml": "^4.0.0",
     "mavon-editor": "^2.9.1",
     "qs": "^6.10.1",
-    "vue": "^2.6.11",
-    "vuex": "^3.4.0"
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

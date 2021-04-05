@@ -79,3 +79,17 @@ export function put(url, data = {}) {
     );
   });
 }
+
+export function deletePost(url, data = {}) {
+  return new Promise((resolve, reject) => {
+    console.log(data)
+    instance.delete(url, {data:JSON.stringify(data)}).then(
+      (response) => {
+        resolve(response.data);
+      },
+      (err) => {
+        reject(err);
+      }
+    );
+  });
+}
