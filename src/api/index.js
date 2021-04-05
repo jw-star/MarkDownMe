@@ -1,4 +1,4 @@
-import { get,post,put ,deletePost} from "./http";
+import { get,put ,deletePost} from "./http";
 
 const git_username=localStorage.getItem("git_username")
 const git_repo=localStorage.getItem("git_repo")

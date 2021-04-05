@@ -60,6 +60,20 @@
         >
           <el-button @click="deleteSel" type="primary">删除文章</el-button>
         </el-tooltip>
+        <a href="https://github.com/jw-star/MarkDownMe"
+          ><img
+            style="
+              position: absolute;
+              top: 0;
+              right: 0;
+              border: 0;
+              width: 100px;
+              height: 100px;
+            "
+            src="https://aral.github.com/fork-me-on-github-retina-ribbons/right-graphite@2x.png"
+            alt="Fork me on GitHub"
+        /></a>
+        
       </el-header>
       <!-- 内容 -->
       <el-main
@@ -69,7 +83,7 @@
           v-model="content"
       /></el-main>
 
-      <el-footer>Footer</el-footer>
+      <el-footer></el-footer>
 
       <el-drawer title="元数据" :visible.sync="drawer" @close="updateMeta">
         <div class="demo-drawer__content">
@@ -231,16 +245,16 @@ lastmod: '2021-04-05 13:07:38'
       }
     },
     deleteSel() {
-       this.loading = true;
+      this.loading = true;
       this.loadingText = "正在删除";
-     
+
       var data = {
         message: "删除文章",
         sha: this.blogList[this.value].sha,
       };
       delPost(this.blogList[this.value].path, data).then((res) => {
         this.getPostList();
-        this.clearContent()
+        this.clearContent();
         this.loading = false;
 
         this.$message({
@@ -251,9 +265,9 @@ lastmod: '2021-04-05 13:07:38'
     },
     //提交文章
     submitPost() {
-            if(this.content.indexOf('---',4)==-1){
-           this.$message.error("请设置元数据重新提交");
-           return
+      if (this.content.indexOf("---", 4) == -1) {
+        this.$message.error("请设置元数据重新提交");
+        return;
       }
       this.loading = true;
       this.loadingText = "正在提交";
