@@ -77,7 +77,7 @@
               width: 100px;
               height: 100px;
             "
-            src="https://aral.github.com/fork-me-on-github-retina-ribbons/right-graphite@2x.png"
+            src="https://github.blog/wp-content/uploads/2008/12/forkme_right_green_007200.png?resize=149%2C149"
             alt="Fork me on GitHub"
         /></a>
       </el-header>
