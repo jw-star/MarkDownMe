@@ -301,8 +301,7 @@ lastmod: '2021-04-05 13:07:38'
       this.loadingText = "正在提交";
       var data;
       var path;
-
-      if (this.value == "") {
+      if (this.value.length == 0) {
         data = {
           message: "新建文章",
           content: this.encode(this.content),
