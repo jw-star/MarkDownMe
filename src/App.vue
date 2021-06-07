@@ -307,6 +307,7 @@ lastmod: '2021-04-05 13:07:38'
           message: "新建文章",
           content: this.encode(this.content),
         };
+        this.meta = this.getMetaJson();
         path = this.git_path + "/" + this.meta.date + "-" + this.meta.title + ".md";
       } else {
         data = {
