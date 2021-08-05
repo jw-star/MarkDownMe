@@ -10,7 +10,7 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "element-ui": "^2.4.5",
-    "js-yaml": "^4.0.0",
+    "js-yaml": "^4.1.0",
     "mavon-editor": "^2.9.1",
     "qs": "^6.10.1",
     "vue": "^2.6.11"
