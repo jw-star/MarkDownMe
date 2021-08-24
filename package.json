@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.15.2",
-    "element-ui": "^2.4.5",
+    "element-ui": "^2.15.4",
     "js-yaml": "^4.1.0",
     "mavon-editor": "^2.9.1",
     "qs": "^6.10.1",
